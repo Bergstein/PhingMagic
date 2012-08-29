@@ -14,6 +14,7 @@ class PHPDebTask extends Task
     protected $Priority = 'optional';
     protected $Homepage;
     protected $Description;
+    protected $Private;
     protected $Recommends;
 
     protected $Filename;
@@ -32,6 +33,7 @@ Recommends: '.$this->Recommends.'
 Priority: '.$this->Priority.'
 Homepage: '.$this->Homepage.'
 Description: '.$this->Description.'
+X-Private: '.$this->Private.'
 ');
     }
 
@@ -153,5 +155,15 @@ Description: '.$this->Description.'
     public function getRecommends ()
     {
         return $this->Recommends;
+    }
+
+    public function setPrivate($Private)
+    {
+        $this->Private = $Private;
+    }
+
+    public function getPrivate()
+    {
+        return $this->Private;
     }
 }
