@@ -19,22 +19,35 @@ class PHPDebTask extends Task
 
     protected $Filename;
 
-    public function main() {
+    public function main()
+    {
+        $Contents  = ['Package: '.$this->Name];
+        $Contents [] = 'Version: '.$this->Version;
+        $Contents [] = 'Architecture: '.$this->Architecture;
+        $Contents [] = 'Maintainer: '.$this->Maintainer;
+
+        if (null !== $this->Depends)
+            $Contents[] = 'Depends: '.$this->Depends;
+
+        if (null !== $this->Provides)
+            $Contents[] ='Provides: '.$this->Provides;
+
+        if (null !== $this->Recommends)
+            $Contents [] = 'Recommends: '.$this->Recommends;
+
+        if (null !== $this->Private)
+            $Contents [] = 'X-Private: '.$this->Private;
+
+        $Contents [] = 'Section: '.$this->Section;
+        $Contents [] = 'Priority: '.$this->Priority;
+
+        if (null !== $this->Homepage)
+            $Contents [] = 'Homepage: '.$this->Homepage;
+
+        $Contents [] = 'Description: '.$this->Description.PHP_EOL;
 
         $Control = new PhingFile($this->Filename);
-        return file_put_contents($Control->getAbsoluteFile(), 'Package: '.$this->Name.'
-Version: '.$this->Version.'
-Architecture: '.$this->Architecture.'
-Maintainer: '.$this->Maintainer.'
-Depends: '.$this->Depends.'
-Provides: '.$this->Provides.'
-Section: '.$this->Section.'
-Recommends: '.$this->Recommends.'
-Priority: '.$this->Priority.'
-Homepage: '.$this->Homepage.'
-Description: '.$this->Description.'
-X-Private: '.$this->Private.'
-');
+        return file_put_contents($Control->getAbsoluteFile(), implode(PHP_EOL, $Contents));
     }
 
     public function setName ($Name)
